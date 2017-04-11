@@ -1,0 +1,152 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Sekhar</title>
+    <meta name="description" content="Sample web page">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.js'></script>
+    <script src="js/reveal.js"></script>
+
+    <script id="app" src="/sampelwebpage/javascript/app.js"></script>
+    <script id="keen" src="/sampelwebpage/javascript/keenApi.js"></script>
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/white.css">
+    <script src="/sampelwebpage/javascript/screentime.js"></script>
+    <script src="https://d26b395fwzu5fz.cloudfront.net/3.4.1/keen.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="keen.dashboard.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../assets/css/keen-dashboards.css"/>
+    <script type="text/javascript">
+        !function (name, path, ctx) {
+            var latest, prev = name !== 'Keen' && window.Keen ? window.Keen : false;
+            ctx[name] = ctx[name] || {
+                    ready: function (fn) {
+                        var h = document.getElementsByTagName('head')[0], s = document.createElement('script'),
+                            w = window, loaded;
+                        s.onload = s.onerror = s.onreadystatechange = function () {
+                            if ((s.readyState && !(/^c|loade/.test(s.readyState))) || loaded) {
+                                return
+                            }
+                            s.onload = s.onreadystatechange = null;
+                            loaded = 1;
+                            latest = w.Keen;
+                            if (prev) {
+                                w.Keen = prev
+                            } else {
+                                try {
+                                    delete w.Keen
+                                } catch (e) {
+                                    w.Keen = void 0
+                                }
+                            }
+                            ctx[name] = latest;
+                            ctx[name].ready(fn)
+                        };
+                        s.async = 1;
+                        s.src = path;
+                        h.parentNode.insertBefore(s, h)
+                    }
+                }
+        }('KeenAsync', 'https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js', this);
+
+        KeenAsync.ready(function () {
+            // Configure a client instance
+            initializeKeen()
+        });
+    </script>
+</head>
+<body onPageShow=changePage()>
+
+
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/reveal.min.css'>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+
+
+<div class="reveal">
+    <div class="slides">
+        <section id="slide1" class="secondHeadingStyle" onload=changePage()>
+            Slide 1 <br><br>
+            <button type="button"
+                    onclick=recordCallToActionClicked("email")
+            >Call To Action Email!
+            </button>
+        </section>
+        <section id="slide2" onshow=changePage()>
+            Slide 2 <br><br>
+            <div id="column-chart"></div>
+            <button type="button"
+                    onclick=recordCallToActionClicked("website")
+            >Call To Action in Website!
+            </button>
+        </section>
+        <section id="slide3" onshow=changePage()>
+            Slide 3 <br><br>
+            <button type="button"
+                    onclick=recordCallToActionClicked("audio")
+            >Call To Action in Audio!
+            </button>
+        </section>
+        <section id="slide4" onshow=changePage()>
+            <div id="count-pageviews-metric" class="pageViewsStyle"></div>
+            <br>
+            <div id="chart-02"></div>
+            <button type="button"
+                    onclick=getCallToActionAnalytics()
+            >Click to see some magic
+            </button>
+        </section>
+    </div>
+</div>
+<script>
+    Reveal.initialize({
+        width: "100%",
+        height: "100%",
+        margin: 0,
+        minScale: 1,
+        maxScale: 1
+    });
+
+    var totalSlides = Reveal.getTotalSlides();
+    console.log("total slides = " + totalSlides);
+
+    Reveal.addEventListener('slidechanged', function (event) {
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+        console.log("slide changed listener: in slide: " )
+        console.log(event);
+        var percentVisited;
+        var currentSlide = event.indexh + 1;
+        if (currentSlide === 0.25*totalSlides) {
+            console.log("visited 25% of presentation");
+            percentVisited = 25;
+        } else if (currentSlide === 0.50*totalSlides) {
+            console.log("visited 50% of presentation");
+            percentVisited = 50;
+        } else if (currentSlide === 0.75*totalSlides) {
+            console.log("visited 75% of presentation");
+            percentVisited = 75;
+        } else if (currentSlide === totalSlides) {
+            console.log("visited 100% of presentation");
+            percentVisited = 100;
+        }
+
+        console.log("percent visited = " + percentVisited);
+        recordPresentationCompletionEvent(percentVisited);
+        computeFunnel();
+    });
+
+</script>
+
+
+</body>
+</html>
